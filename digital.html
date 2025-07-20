@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5 Page Parallax</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      body {
+        width: 100vw;
+        height: 455vh;
+        position: relative;
+        overflow: hidden;
+      }
+      .page1 {
+        width: 100vw;
+        height: 100vh;
+        background: #4682b4;
+        position: relative;
+        overflow: hidden;
+      }
+      .page1 h1 {
+        color: white;
+        position: absolute;
+        top: 32%;
+        left: 53%;
+        text-shadow: 0 0 10px #00e5ff, 0 0 20px #00b7ff88;
+        font-size: 40px;
+      }
+      .page2 {
+        width: 100vw;
+        height: 15vh;
+        background: #4682b4;
+        position: relative;
+      }
+      .page3 {
+        background: #0f0f0f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 105vh;
+        perspective: 1000px;
+        font-family: "Orbitron", sans-serif;
+        margin: 0;
+      }
+      .page4 {
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(#0f0f0f, rgb(2, 23, 62));
+        position: relative;
+        overflow-y: hidden;
+      }
+
+      .stars-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 2s infinite ease-in-out;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+      }
+
+      .page5 {
+        width: 100vw;
+        height: 100vh;
+        background-image: url(gg-c.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        opacity: 75%;
+      }
+
+      [class^="parallax-item"] {
+        position: absolute;
+        top: 10%;
+        left: 40%;
+        color: orange;
+        font-size: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 11;
+        transition: transform 0.1s linear;
+      }
+      [class^="parallax-moon"] {
+        position: absolute;
+        top: 10%;
+        left: 40%;
+        color: orange;
+        font-size: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 11;
+        transition: transform 0.1s linear;
+      }
+      .bench {
+        position: relative;
+        top: 200px;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.1); /* translucent white */
+        border-radius: 16px;
+        padding: 2rem;
+        position: absolute;
+        top: 280px;
+        left: 600px;
+        font-size: 24px;
+        width: 600px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        backdrop-filter: blur(10px); /* the blur effect */
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        color: white;
+      }
+      .keyboard {
+        position: absolute; /* or absolute if needed */
+        top: 320px;
+        left: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transform: rotateX(15deg);
+        overflow: hidden;
+        transform-style: preserve-3d;
+        border: 2px solid #00f0ff;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 0 0 6px #00f0ff, 0 0 14px #00f0ff, inset 0 0 8px #00f0ff;
+      }
+
+      .row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+      .box h1 {
+        color: white;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+        font-size: 42px;
+        width: 700px;
+        justify-content: center;
+        text-align: center;
+        text-shadow: 0 0 10px #00e5ff, 0 0 20px #00f0ff;
+      }
+      .key {
+        padding: 16px 22px;
+        font-size: 24px;
+        min-width: 60px;
+        text-align: center;
+        color: #00f0ff;
+        background: #111;
+        border: 2px solid #00f0ff;
+        border-radius: 6px;
+        box-shadow: 0 0 6px #00f0ff, 0 0 14px #00f0ff, inset 0 0 8px #00f0ff;
+        cursor: pointer;
+        transform: translateZ(8px);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .key:hover {
+        box-shadow: 0 0 10px #00f0ff, 0 0 24px #00f0ff, inset 0 0 12px #00f0ff;
+      }
+
+      .key:active {
+        transform: translateY(4px) translateZ(2px);
+        box-shadow: 0 0 3px #00f0ff, 0 0 8px #00f0ff, inset 0 0 6px #00f0ff;
+      }
+
+      /* Special key sizes */
+      .key.wide {
+        min-width: 100px;
+      }
+
+      .key.extra-wide {
+        min-width: 160px;
+      }
+      .key.space {
+        min-width: 300px;
+      }
+      .view {
+        background: rgba(255, 255, 255, 0.1); /* translucent white */
+        border-radius: 16px;
+        padding: 2rem;
+        position: absolute;
+        display: none;
+        top: 260px;
+        left: 700px;
+        font-size: 24px;
+        width: 600px;
+        height: 300px;
+        box-shadow: 0 0 1px #00f0ff, 0 0 8px #00f0ff, inset 0 0 6px #00f0ff;
+        backdrop-filter: blur(10px); /* the blur effect */
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        color: white;
+        justify-content: center;
+        align-items: center;
+      }
+      .now {
+        background: rgba(255, 255, 255, 0.1); /* translucent white */
+        border-radius: 16px;
+        padding: 2rem;
+        position: absolute;
+        top: 260px;
+        left: 700px;
+        font-size: 24px;
+        width: 600px;
+        height: 300px;
+        box-shadow: 0 0 1px #00f0ff, 0 0 8px #00f0ff, inset 0 0 6px #00f0ff;
+        backdrop-filter: blur(10px); /* the blur effect */
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        color: white;
+      }
+      .view.active {
+        display: block;
+      }
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 60px;
+        max-width: 600px;
+        position: absolute;
+        top: 50px;
+        padding: 20px;
+        justify-content: center;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+      .card-container img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        padding: 12px;
+        background: #fdfafa;
+        border: 3px solid #fdfafa;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+      .card-container img:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+        transition: transform 0.8s ease;
+      }
+      /* .light-button button.bt {
+        position: relative;
+        height: 200px;
+        display: flex;
+        align-items: flex-end;
+        outline: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .light-button button.bt .button-holder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 100px;
+        background-color: #0a0a0a;
+        border-radius: 5px;
+        color: #0f0f0f;
+        font-weight: 700;
+        transition: 300ms;
+        outline: #0f0f0f 2px solid;
+        outline-offset: 20;
+      }
+
+      .light-button button.bt .light-holder {
+        position: absolute;
+        height: 200px;
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .light-button button.bt .light-holder .dot {
+        position: absolute;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        background-color: #0a0a0a;
+        border-radius: 10px;
+        z-index: 2;
+      }
+
+      .light-button button.bt .light-holder .light {
+        position: absolute;
+        top: 0;
+        width: 500px;
+        height: 200px;
+        clip-path: polygon(50% 0%, 25% 100%, 75% 100%);
+        background: transparent;
+      }
+
+      .light-button button.bt:hover .button-holder {
+        color: rgb(255, 255, 255);
+        outline: rgb(255, 255, 255) 2px solid;
+        outline-offset: 2px;
+      }
+
+      .light-button button.bt:hover .light-holder .light {
+        background: rgb(255, 255, 255);
+        background: linear-gradient(
+          180deg,
+          rgb(255, 255, 255) 0%,
+          rgba(255, 255, 255, 0) 75%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      } */
+      .footer {
+        background: white;
+        color: #e0e0e0;
+        text-align: center;
+        padding: 20px 20px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .footer h2 {
+        position: relative;
+        top: 3px;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #b0bec5;
+      }
+
+      .footer p {
+        font-size: 1rem;
+        margin: 8px 0;
+        line-height: 1.6;
+        color: #b0bec5;
+      }
+
+      .footer .signature {
+        margin-top: 20px;
+        font-style: italic;
+        color: #90caf9;
+      }
+      .road {
+        width: 150%;
+        height: 100px;
+        background: #2f2f2f;
+        position: relative;
+        clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+        overflow: hidden;
+        top: 90%;
+        left: -300px;
+      }
+
+      .line {
+        width: 100%;
+        height: 6px;
+        background: repeating-linear-gradient(
+          to right,
+          white 0 40px,
+          transparent 40px 80px
+        );
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+      }
+      .queen-card {
+        background: rgba(255, 255, 255, 0.1); /* translucent white */
+        border-radius: 16px;
+        padding: 2rem;
+        position: absolute;
+        top: 480px;
+        left: 40px;
+        font-size: 24px;
+        width: 500px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        backdrop-filter: blur(10px); /* the blur effect */
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        color: white;
+      }
+      [class^="social-card"] {
+        position: absolute;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        max-width: 200px;
+        padding: 12px;
+        z-index: 10;
+        /* background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        box-shadow: 0 0 10px #00f0ff88;
+        backdrop-filter: blur(6px); */
+      }
+      .social-card img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      li {
+        position: relative;
+        padding-left: 20px; /* Space for the bullet */
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      li::before {
+        content: "•";
+        position: absolute;
+        left: 0; /* Bullet aligned */
+        top: 0;
+        color: #ffffff;
+        font-size: 24px;
+        line-height: 1.6;
+      }
+      span {
+        color: #00e5ff;
+      }
+    </style>
+    <section class="page2"></section>
+    <section class="page1">
+      <h1>KNOW ABOUT ME!</h1>
+      <div class="glass-card">
+        <p>
+          Hi I am Aadya Agarwal. Innovative and detail-oriented
+          <strong>Computer Science</strong> student with a passion for
+          problem-solving, <strong>UI/UX design</strong> , and application
+          development. Proficient in <strong>Canva</strong> and UI/UX design, I
+          specialize in creating intuitive and visually appealing digital
+          experiences. With strong analytical skills, I focus on<strong>
+            building scalable, high-performance applications</strong
+          >. Currently seeking opportunities to apply my skills in a dynamic and
+          growth-oriented environment..
+        </p>
+      </div>
+
+      <div class="parallax-item1" style="top: 5%; left: 10%">
+        <img src="sku.png" width="130px" height="130px" alt="LOADING" />
+      </div>
+
+      <div class="parallax-item7" style="top: 5%; left: 20%">
+        <img src="sku.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <!-- <div class="parallax-item3" style="top: 3%; left: 50%">
+        <img src="sku.png" width="150px" height="150px" alt="" />
+      </div> -->
+      <!-- <div class="parallax-item4" style="top: 9%; left: 50%">
+        <img src="sku.png" width="150px" height="150px" alt="" />
+      </div> -->
+      <div class="parallax-item3" style="top: 6%; left: 45%">
+        <img src="sun.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item2" style="top: 7%; left: 40%">
+        <img src="sku.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item4" style="top: 6%; left: 80%">
+        <img src="sku.png" width="130px" height="130px" alt="LOADING" />
+      </div>
+      <div class="parallax-item5" style="top: 3%; left: 50%">
+        <img src="sku.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item6" style="top: 7%; left: 65%">
+        <img src="sku.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <img
+        class="bench"
+        src="bench.png"
+        width="550px"
+        height="500px"
+        alt="LOADING"
+      />
+      <!-- fence -->
+      <div class="parallax-item8" style="top: 83%; left: 38%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item8" style="top: 83%; left: 47%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item8" style="top: 83%; left: 56%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item8" style="top: 83%; left: 65%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item8" style="top: 83%; left: 74%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-item8" style="top: 83%; left: 83%">
+        <img src="fence.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+    </section>
+    <section class="page3">
+      <div class="box">
+        <h1>CHAPTERS OF MY ACADEMIC JOURNEY</h1>
+      </div>
+      <div class="keyboard">
+        <div class="row">
+          <button class="key">KinderGarden</button>
+          <button class="key">Primary</button>
+          <!-- <button class="key">R</button>
+        <button class="key">T</button>
+        <button class="key">Y</button>
+        <button class="key">U</button>
+        <button class="key">I</button>
+        <button class="key">O</button>
+        <button class="key">P</button> -->
+        </div>
+        <div class="row">
+          <button class="key">College</button>
+          <button class="key">Intern</button>
+          <button class="key">Job</button>
+        </div>
+        <div class="row">
+          <button class="key">Junior High School</button>
+          <button class="key">Senior High School</button>
+          <!-- <button class="key">C</button>
+        <button class="key">V</button>
+        <button class="key">B</button>
+        <button class="key">N</button> -->
+        </div>
+      </div>
+      <div class="now">Click any Key to Explore!</div>
+      <div class="view kindergarden-msg">
+        <ul>
+          <li>
+            I spent my early childhood immersed in imagination, curiosity, and
+            boundless creativity.
+          </li>
+          <li>
+            My kindergarten years were filled with color, storytelling, and
+            joyful learning that sparked my love for discovery.
+          </li>
+          <li>
+            I studied at <span>Shaurya Army School</span>, where my enthusiasm
+            for school life truly began to grow.
+          </li>
+          <li>
+            From arts and crafts to interactive group games, I eagerly took part
+            in every classroom activity with wide-eyed excitement.
+          </li>
+          <li>
+            A standout memory from these formative years was my participation in
+            a <span>fancy dress competition</span> where I proudly portrayed
+            <span>Indira Gandhi</span>.
+          </li>
+          <li>
+            That moment on stage helped build my confidence and kindled a
+            lasting passion for self-expression and public presence.
+          </li>
+          <li>
+            These early school experiences laid a joyful and meaningful
+            foundation for the learner, creator, and communicator I continue to
+            become.
+          </li>
+        </ul>
+      </div>
+      <div class="view primary-msg">
+        <ul>
+          <li>
+            I studied from Class 1 to Class 5 at
+            <span>Mount Sinai School</span>, where my foundational years were
+            shaped by curiosity, creativity, and a love for learning.
+          </li>
+          <li>
+            I actively engaged in a variety of
+            <span>co-curricular activities</span> including
+            <span>singing</span>, <span>dancing</span>, <span>debates</span>,
+            <span>speeches</span>, and <span>quizzes</span>, nurturing both my
+            confidence and communication skills.
+          </li>
+          <li>
+            I was awarded <span>Rank 1 in the Handwriting Competition</span>, a
+            reflection of my discipline and eye for detail even at a young age.
+          </li>
+          <li>
+            I also earned recognition in <span>science quizzes</span>, which
+            sparked my early fascination with logic, discovery, and
+            problem-solving.
+          </li>
+          <li>
+            These years laid the groundwork for my growth as a confident,
+            expressive, and enthusiastic learner.
+          </li>
+        </ul>
+      </div>
+      <div class="view junior-msg">
+        <ul>
+          <li>
+            My junior high years at
+            <span>Ashok Hall Girls Residential School</span> were filled with
+            exploration, growth, and discovery—both in the classroom and beyond.
+          </li>
+          <li>
+            I deepened my interest in <span>science</span>,
+            <span>mathematics</span>, and creative pursuits through subjects
+            that challenged and inspired me.
+          </li>
+          <li>
+            With focused effort, I participated in
+            <span>Maths and Science Olympiads</span>, earning
+            <span>Rank 1 in the Almora District</span>—a milestone that
+            highlighted my academic dedication.
+          </li>
+          <li>
+            I actively joined
+            <span>debates, speeches, extempore competitions</span>, and vibrant
+            <span>cultural programs</span>, gaining confidence and honing my
+            communication skills with every stage appearance.
+          </li>
+          <li>
+            These formative years shaped my ability to lead with purpose, speak
+            with conviction, and embrace challenges with energy. They didn’t
+            just prepare me for high school—they helped me discover who I was
+            becoming.
+          </li>
+        </ul>
+      </div>
+      <div class="view highschool-msg">
+        <ul>
+          <li>
+            My high school years at
+            <span>Ashok Hall Girls Residential School</span> were a pivotal
+            chapter where ambition met opportunity and imagination found its
+            wings.
+          </li>
+          <li>
+            I achieved <span>Rank 3 in Class 10</span> and elevated to
+            <span>Rank 1 in Class 12</span> in the Almora District, reflecting
+            both academic excellence and steady growth.
+          </li>
+          <li>
+            I actively participated in <span>tech events</span> and
+            <span>innovation fairs</span>, where I explored modern tools, shared
+            ideas, and cultivated a passion for hands-on learning.
+          </li>
+          <li>
+            My fascination with astronomy led me to
+            <span>night sky observation sessions</span>, fueling my curiosity
+            with each gaze into the stars.
+          </li>
+          <li>
+            I had the privilege of contributing to the
+            <span>NASA Sally Ride EarthKAM Project</span>, gaining real-time
+            exposure to Earth imagery and weather simulations, bridging the gap
+            between science and exploration.
+          </li>
+          <li>
+            I also created two interactive games —
+            <span>“Apple in a Basket”</span> and a
+            <span>car racing game</span> — using <span>Alice software</span>,
+            combining storytelling, logic, and design thinking.
+          </li>
+          <li>
+            These experiences not only marked academic success but also sparked
+            creativity, deepened problem-solving skills, and inspired a future
+            in technology and space science.
+          </li>
+        </ul>
+      </div>
+      <div class="view college-msg">
+        <ul>
+          <li>
+            I am currently a sophomore at
+            <span>Rajiv Gandhi Institute of Petroleum Technology (RGIPT)</span>,
+            pursuing a Bachelor's degree in
+            <span>Computer Science and Engineering (CSE)</span>.
+          </li>
+          <li>
+            Secured <span>Rank 10</span> in the college-level
+            <span>"Code Decipher"</span> competition organized by
+            <span>GeeksforGeeks</span>.
+          </li>
+          <li>
+            Participated in an <span>Internet of Things (IoT)</span> workshop,
+            where I explored embedded systems and learned the working of
+            <span>hot air balloons</span>.
+          </li>
+          <li>
+            Currently a member of the
+            <span>Science and Technology (SNT) Council</span> under the
+            <span>Astronomical Club</span>, actively involved in skywatching and
+            outreach activities.
+          </li>
+        </ul>
+      </div>
+      <div class="view job-msg">Job content shown here.</div>
+      <div class="view intern-msg">
+        <ul>
+          <li>
+            <span>
+              I’ve been actively exploring the intersection of creativity and
+              code through industry internships and global open-source programs,
+              gaining real-world experience and shaping my design and
+              development journey.
+            </span>
+          </li>
+          <li>
+            Selected as a
+            <span>Contributor for GirlScript Summer of Code 2025 (GSSoC)</span>,
+            I contributed to impactful <span>open-source projects</span>,
+            collaborating with global mentors and peers across GitHub
+            repositories.
+          </li>
+          <li>
+            This experience enhanced my expertise in
+            <span>Git, GitHub, version control</span>, and
+            <span>collaborative software development workflows</span>, while
+            nurturing a strong sense of community-driven innovation.
+          </li>
+          <li>
+            Currently working as a
+            <span
+              >Graphic Design Intern at Nekkotech Solutions Private
+              Limited</span
+            >, where I create compelling
+            <span
+              >visual assets, UI elements, posters, banners, and
+              infographics</span
+            >
+            that align with brand strategy and elevate user engagement.
+          </li>
+          <li>
+            My design toolkit includes
+            <span>Figma, Adobe Illustrator, Photoshop, and Canva</span>,
+            allowing me to bring concepts to life with precision, creativity,
+            and consistency.
+          </li>
+          <li>
+            Simultaneously, I serve as a
+            <span>Graphic Design Intern at Yapassio</span>, a global learning
+            platform, where I design
+            <span
+              >course visuals, event creatives, promotional graphics, and
+              icons</span
+            >
+            for both web and mobile platforms.
+          </li>
+          <li>
+            These dynamic roles have helped me master
+            <span
+              >visual hierarchy, brand storytelling, layout design,
+              typography</span
+            >, and <span>responsive design principles</span>—equipping me to
+            thrive in modern, fast-paced creative environments.
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="page4">
+      <a
+        class="social-card1"
+        style="top: 15%; left: 5%"
+        href="https://github.com/AadyaAgarwal01"
+      >
+        <img src="github.png" width="150px" height="150px" alt="LOADING" />
+      </a>
+      <a
+        class="social-card2"
+        style="top: 45%; left: 25%"
+        href="https://www.linkedin.com/in/aadya-agarwal-a4780a330/"
+      >
+        <img src="linkedin.png" width="150px" height="150px" alt="LOADING" />
+      </a>
+      <a
+        class="social-card3"
+        style="top: 15%; left: 45%"
+        href="https://www.instagram.com/iconic_me7/"
+      >
+        <img src="insta.png" width="150px" height="150px" alt="LOADING" />
+      </a>
+      <a
+        href="mailto:24cs3002@rgipt.ac.in?subject=Hello Aadya&body=I saw your amazing work!"
+        class="social-card4"
+        style="top: 45%; left: 65%"
+      >
+        <img src="gmail.png" width="150px" height="150px" alt="LOADING" />
+      </a>
+      <div class="stars-container"></div>
+      <div class="parallax-moon3" style="top: 3%; left: 85%">
+        <img src="moon.png" width="150px" height="150px" alt="LOADING" />
+      </div>
+      <div class="parallax-moon2" style="top: 72%; left: 5%">
+        <img src="car.png" width="250px" height="250px" alt="LOADING" />
+      </div>
+      <div class="road">
+        <div class="line"></div>
+      </div>
+    </section>
+    <section class="page5">
+      <div class="card-container"></div>
+      <div class="queen-card">
+        <p>
+          "Just as a trader counts stocks as assets, a coder and designer
+          treasure their tools
+          <strong
+            >for in every line of code and stroke of design lies the currency of
+            creation.</strong
+          >"
+        </p>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-content">
+        <h2>Crafted with Curiosity ✧</h2>
+        <p>
+          Every pixel you see is a reflection of my journey — a blend of code,
+          creativity, and a little caffeine magic.
+        </p>
+        <p>
+          Let’s connect beyond the screen. <br />Ideas are infinite, and so is
+          imagination.
+        </p>
+        <hr />
+        <p class="signature">– With wonder, Aadya Agarwal</p>
+      </div>
+    </footer>
+
+    <script>
+      const items = [
+        document.querySelector(".parallax-item1"),
+        document.querySelector(".parallax-item2"),
+        document.querySelector(".parallax-item3"),
+        document.querySelector(".parallax-item4"),
+        document.querySelector(".parallax-item5"),
+        document.querySelector(".parallax-item6"),
+        document.querySelector(".parallax-item7"),
+        // document.querySelector(".parallax-item7"),
+      ];
+
+      // Speeds determine direction (left or right) and intensity
+      const speeds = [-0.2, -0.7, 0, 0.4, 0.6, -0.1, -0.6, -0.7]; // center one (index 2) doesn't move
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+
+        items.forEach((item, index) => {
+          const parentTop = item.parentElement.offsetTop;
+          const offset = scrollY - parentTop;
+          const speed = speeds[index];
+
+          // Scatter horizontally away from center
+          if (
+            offset > -window.innerHeight &&
+            offset < window.innerHeight * 2.5
+          ) {
+            item.style.transform = `translateX(${offset * speed}px)`;
+          }
+        });
+      });
+      const items1 = [document.querySelector(".parallax-moon3")];
+      const items2 = [document.querySelector(".parallax-moon2")];
+
+      // Speeds determine direction (left or right) and intensity
+      const speeds1 = [0.5]; // center one (index 2) doesn't move
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+
+        items1.forEach((item1, index) => {
+          const parentTop = item1.parentElement.offsetTop;
+          const offset = scrollY - parentTop;
+          const speed1 = speeds1[index];
+
+          if (
+            offset > -window.innerHeight &&
+            offset < window.innerHeight * 2.5
+          ) {
+            item1.style.transform = `translateY(${offset * speed1}px)`;
+          }
+        });
+      });
+      //socials
+      const socialCards = [
+        document.querySelector(".social-card1"),
+        document.querySelector(".social-card2"),
+        document.querySelector(".social-card3"),
+        document.querySelector(".social-card4"),
+      ];
+
+      // Different scroll speeds for each
+      const socialSpeeds = [0.2, 0.25, 0.2, 0.2];
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+
+        socialCards.forEach((card, index) => {
+          const parentTop = card.parentElement.offsetTop;
+          const offset = scrollY - parentTop;
+          const speed = socialSpeeds[index];
+
+          if (
+            offset > -window.innerHeight &&
+            offset < window.innerHeight * 2.5
+          ) {
+            card.style.transform = `translateY(${offset * speed}px)`;
+          }
+        });
+      });
+
+      const speeds2 = [0.9];
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+
+        items2.forEach((item2, index) => {
+          const parentTop = item2.parentElement.offsetTop;
+          const offset = scrollY - parentTop;
+          const speed2 = speeds2[index] || 0;
+
+          const maxX = window.innerWidth - item2.offsetWidth; // ✅ Move inside the loop
+
+          if (
+            offset > -window.innerHeight &&
+            offset < window.innerHeight * 2.5
+          ) {
+            let finalX = offset * speed2;
+            if (finalX > maxX) finalX = maxX;
+
+            item2.style.transform = `translateX(${finalX}px)`; // clean and safe
+          }
+        });
+      });
+
+      const messages = {
+        KinderGarden: "kindergarden-msg",
+        Primary: "primary-msg",
+        "Junior High School": "junior-msg",
+        "Senior High School": "highschool-msg",
+        College: "college-msg",
+        Job: "job-msg",
+        Intern: "intern-msg",
+      };
+
+      document.querySelectorAll(".key").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Hide all messages first
+          document.querySelectorAll(".view").forEach((msg) => {
+            msg.classList.remove("active");
+          });
+          const nowBox = document.querySelector(".now");
+          if (nowBox) nowBox.style.display = "none";
+          const keyText = btn.textContent.trim();
+          const classToShow = messages[keyText];
+          if (classToShow) {
+            const view = document.querySelector(`.${classToShow}`);
+            if (view) view.classList.add("active");
+          }
+        });
+      });
+      const starContainer = document.querySelector(".page4 .stars-container");
+
+      const numStars = 100; // Adjust star count here
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 2 + 1}px`;
+        star.style.height = star.style.width;
+        starContainer.appendChild(star);
+      }
+      const container = document.querySelector(".card-container");
+
+      const imagePaths = [
+        "html.png",
+        "css.png",
+        "python.png",
+        "java.png",
+        "vs-code.png",
+        "blender.png",
+        "sql.png",
+        "figma.png",
+        "javascript.png",
+        "jupyter.png",
+      ];
+
+      imagePaths.forEach((path, index) => {
+        const img = document.createElement("img");
+        img.src = path;
+        img.alt = `Image ${index + 1}`;
+
+        img.onerror = () => {
+          console.error("Image not found:", path);
+        };
+
+        container.appendChild(img);
+      });
+    </script>
+  </body>
+</html>

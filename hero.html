@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HERO SECTION</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Birthstone+Bounce&family=Caveat:wght@400..700&family=Clicker+Script&family=Exile&family=Fira+Code:wght@300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lobster&family=Poppins:wght@100;200;300;400;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zhi+Mang+Xing&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: sans-serif;
+      }
+
+      .hero-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .iframe-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+
+      .spline-container {
+        width: 100%;
+        height: 100%;
+      }
+
+      spline-viewer {
+        width: 100%;
+        height: 100%;
+        display: block;
+        transform: translate(-420px, 20px);
+      }
+
+      ul {
+        position: fixed;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        z-index: 10;
+        list-style: none;
+      }
+
+      ul li {
+        list-style: none;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        border-radius: 60px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        transition: width 0.5s;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      ul li::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 60px;
+        background: linear-gradient(45deg, var(--i), var(--j));
+        opacity: 0;
+        transition: 0.5s;
+        z-index: 1;
+      }
+
+      ul li:hover::before {
+        opacity: 1;
+      }
+
+      ul li:hover {
+        width: 180px;
+      }
+
+      ul li .icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        z-index: 2;
+      }
+
+      ul li .icon ion-icon {
+        font-size: 1.5rem;
+        color: #777;
+        transition: 0.5s;
+      }
+
+      ul li:hover .icon ion-icon {
+        transform: scale(0);
+        color: #fff;
+        transition-delay: 0s;
+      }
+
+      ul li .title {
+        position: absolute;
+        left: 70px;
+        color: #fff;
+        font-size: 1em;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transform: scale(0);
+        transition: transform 0.5s;
+        transition-delay: 0s;
+        z-index: 2;
+      }
+
+      ul li:hover .title {
+        transform: scale(1);
+        transition-delay: 0.25s;
+      }
+
+      .info {
+        position: absolute;
+        bottom: 120px;
+        display: flex;
+        gap: 150px;
+        left: 60%;
+        transform: translateX(-15%);
+        color: white;
+        z-index: 5;
+        text-align: center;
+      }
+
+      .click {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      @keyframes bounceCard {
+        0% {
+          margin-top: 20vh;
+        }
+        50% {
+          margin-top: 18vh;
+        }
+        100% {
+          margin-top: 20vh;
+        }
+      }
+      h1.ml8 {
+        position: absolute;
+        font-weight: 900;
+        font-size: 4.5em;
+        color: #fff;
+        width: 2em;
+        height: 1em;
+        bottom: 530px;
+        right: 800px;
+      }
+
+      .ml8 .letters-container {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        height: 1em;
+      }
+
+      .ml8 .letters {
+        position: relative;
+        z-index: 2;
+        display: inline-block;
+        line-height: 0.7em;
+        right: -0.12em;
+        top: -0.2em;
+      }
+
+      /* .ml8 .bang {
+        font-size: 1.4em;
+        top: auto;
+        left: -0.06em;
+      } */
+
+      .ml8 .circle {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+      }
+
+      .ml8 .circle-white {
+        width: 3em;
+        height: 3em;
+        border: 2px dashed white;
+        border-radius: 2em;
+      }
+
+      /* .ml8 .circle-dark {
+        width: 2.2em;
+        height: 2.2em;
+        background-color: #000000;
+        border-radius: 3em;
+      } */
+
+      /* .ml8 .circle-dark-dashed {
+        border-radius: 2.4em;
+        background-color: transparent;
+        border: 2px dashed #4f7b86;
+        width: 2.3em;
+        height: 2.3em; */
+      /* }
+       */
+      .ml9 {
+        position: absolute;
+        font-family: Ubuntu;
+        font-weight: 600;
+        font-size: 3em;
+        width: 2000px;
+        left: -805px;
+        bottom: 390px;
+      }
+
+      .ml9 .text-wrapper {
+        position: relative;
+        display: inline-block;
+        padding-top: 0.2em;
+        padding-right: 0.05em;
+        padding-bottom: 0.1em;
+        overflow: hidden;
+      }
+
+      .ml9 .letter {
+        transform-origin: 50% 100%;
+        display: inline-block;
+        line-height: 1em;
+      }
+      .contact {
+        position: absolute;
+        bottom: 55px;
+        display: flex;
+        left: 17%;
+        color: white;
+        z-index: 5;
+        border: 1px solid white;
+        text-align: center;
+        padding: 6px;
+        border-radius: 6px;
+      }
+
+      .contact::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #ffffff;
+        transition: width 0.3s ease;
+        border-radius: 6px;
+        z-index: -1;
+      }
+
+      .contact:hover::before {
+        width: 100%;
+      }
+
+      .contact:hover {
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+      }
+      .cir {
+        background: rgb(0, 0, 0);
+        position: absolute;
+        top: 30%;
+        left: 34.5%;
+        color: white;
+
+        border-radius: 50%;
+        border: 1px solid rgb(255, 255, 255);
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+      }
+      .arrow {
+        background: rgb(0, 0, 0);
+        top: 30%;
+        left: 14.5%;
+        color: white;
+        position: absolute;
+        top: 68%;
+        left: 40%;
+        transform: rotate(90deg);
+        cursor: pointer;
+        z-index: 5;
+      }
+
+      .arrow span {
+        display: block;
+        width: 1.5vw;
+        height: 1.5vw;
+        border-bottom: 5px solid white;
+        border-right: 5px solid white;
+        transform: rotate(225deg);
+        margin: -10px;
+        animation: animate 2s infinite;
+      }
+
+      .arrow span:nth-child(2) {
+        animation-delay: -0.4s;
+      }
+      .arrow span:nth-child(3) {
+        animation-delay: -0.2s;
+      }
+      .arrow span:nth-child(1) {
+        animation-delay: -0.6s;
+      }
+
+      @keyframes animate {
+        0% {
+          opacity: 0;
+          transform: rotate(225deg) translate(-20px, -20px);
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: rotate(225deg) translate(20px, 20px);
+        }
+      }
+      .animated-card {
+        position: relative;
+        top: 60px;
+        left: -100px;
+        /* background: orange; */
+        z-index: 20;
+      }
+      .animated-card a {
+        position: absolute;
+        top: 400px; /* adjust as needed */
+        left: 50px;
+        background: rgb(255, 255, 255);
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        z-index: 21;
+      }
+      .animated-card img {
+        border-radius: 20px;
+        padding: 0px;
+        position: relative;
+        top: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+      .digital-card img {
+        border-radius: 20px;
+        padding: 0px;
+        position: absolute;
+        left: 200px;
+        top: 150px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+      .animated-card a {
+        border-radius: 8px;
+        padding: 0px;
+        position: relative;
+        top: -200px;
+        left: -10px;
+        background-color: white;
+        width: 100px;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 32;
+        transition: background 0.3s ease, color 0.3s ease;
+        transform: perspective(800px) rotateX(10deg) rotateY(-10deg)
+          rotateZ(-0deg);
+      }
+      .digital-card a {
+        border-radius: 20px;
+        padding: 0px;
+        position: absolute;
+        left: 410px;
+        top: 440px;
+        background-color: white;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 32;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      /* .animated-card:hover,
+      .digital-card:hover {
+        transform: scale(1.05);
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="hero-wrapper">
+      <!-- 🔘 Vertical Icon List -->
+      <ul>
+        <li style="--i: #0025c9; --j: #ea51ff">
+          <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+          <span class="title">Home</span>
+        </li>
+        <li style="--i: #0025c9; --j: #7ee8fa">
+          <span class="icon"
+            ><ion-icon name="share-social-outline"></ion-icon
+          ></span>
+          <span class="title">Share</span>
+        </li>
+        <li style="--i: #ffa9c6; --j: #f434e2">
+          <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
+          <span class="title">Like</span>
+        </li>
+      </ul>
+
+      <!-- 🧊 Spline Viewer -->
+      <div class="iframe-container">
+        <div class="spline-container">
+          <spline-viewer
+            url="https://prod.spline.design/BHqS0gD7a2z9odF8/scene.splinecode"
+          ></spline-viewer>
+        </div>
+
+        <!-- 🔘 Overlay Text/Button -->
+        <!-- 🔘 Overlay Animated Info Card -->
+
+        <div class="info">
+          <!-- <h1 class="ml9">
+            <span class="text-wrapper">
+              <span class="letters">I AM AADYA AGARWAL</span>
+            </span>
+          </h1> -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+          <!-- <div class="me">I AM AADYA AGARWAL</div> -->
+
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+          <h1 class="ml9">
+            <span class="text-wrapper">
+              <span class="letters">I AM AADYA AGARWAL</span>
+            </span>
+          </h1>
+          <div class="animated-card">
+            <img src="book.png" width="400px" height="450px" alt="LOADING" />
+            <a href="about.html" class="book-btn">Book View</a>
+          </div>
+          <div class="digital-card">
+            <img
+              src="digital.png"
+              id="digital"
+              width="500px"
+              height="300px"
+              alt="LOADING"
+            />
+            <a href="digital.html" class="digital-btn">Digital</a>
+          </div>
+        </div>
+
+        <h1 class="ml8">
+          <span class="letters-container">
+            <span class="letters letters-left">Hi</span>
+            <span class="letters bang">!</span>
+          </span>
+        </h1>
+        <div class="arrow">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="contact">CONTACT ME</div>
+      </div>
+    </div>
+
+    <!-- 💡 Scripts -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/@splinetool/viewer@1.10.22/build/spline-viewer.js"
+    ></script>
+    <script src="herojs.js"></script>
+  </body>
+</html>

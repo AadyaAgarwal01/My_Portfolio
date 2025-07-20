@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flipbook with Sound</title>
+    <style>
+      body {
+        background: #111;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+
+      .book {
+        position: relative;
+        width: 12px;
+        height: 60px;
+        perspective: 2000px;
+      }
+
+      .page {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        transform-style: preserve-3d;
+        transition: transform 1.3s ease-in-out;
+        backface-visibility: hidden;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .left-page {
+        left: 0;
+        z-index: 3;
+        background: rgb(255, 255, 255);
+        color: white;
+      }
+
+      .right-page {
+        right: 0;
+        transform-origin: left;
+        z-index: 3;
+        background: white;
+        position: absolute;
+      }
+
+      .right-page::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at 10% 50%,
+          rgba(0, 0, 0, 0.2),
+          transparent 80%
+        );
+        opacity: 0.4;
+        transform: scaleX(-1) skewY(-1deg);
+      }
+
+      .flipped {
+        transform: rotateY(-180deg) scaleX(0.98) skewY(-1deg);
+        z-index: 1 !important;
+        box-shadow: -20px 0 30px rgba(0, 0, 0, 0.4);
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 33px;
+        width: 68%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 40px;
+        z-index: 10;
+      }
+
+      .buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .buttons button:hover {
+        background: none;
+        transform: scale(1.3);
+      }
+      .book {
+        position: relative;
+        width: 1000px;
+        height: 630px;
+        perspective: 2000px;
+        padding: 0;
+        z-index: 1;
+        background: #111;
+        box-shadow: 0 0 0 5px transparent; /* fallback border */
+      }
+
+      .book::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background: linear-gradient(270deg, #00ffff, #ff00ff, #00ffff);
+        background-size: 600% 600%;
+        border-radius: 15px;
+        z-index: -1;
+        animation: borderMove 4s linear infinite;
+      }
+
+      @keyframes borderMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="book" id="book">
+      <div class="page left-page">YET TO COME</div>
+      <div class="page right-page">YET TO COME</div>
+      <div class="page right-page">YET TO COME</div>
+      <div class="page right-page">YET TO COME</div>
+      <div class="page right-page">YET TO COME</div>
+      <div
+        class="page right-page"
+        style="background: rgb(255, 255, 255); color: white"
+      >
+        Thank You!
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="prevPage()">⬅ Prev</button>
+      <button onclick="nextPage()">Next ➡</button>
+    </div>
+
+    <!-- Flip sound -->
+    <audio
+      id="flipSound"
+      src="https://cdn.jsdelivr.net/gh/AadyaAgarwalAssets/flipbook@main/flip.mp3"
+      preload="auto"
+    ></audio>
+
+    <script>
+      const pages = document.querySelectorAll(".right-page");
+      // const flipSound = document.getElementById("flipSound");
+      let current = 0;
+
+      pages.forEach((page, i) => {
+        page.style.zIndex = pages.length - i;
+      });
+
+      // function playSound() {
+      //   flipSound.currentTime = 0;
+      //   flipSound.play();
+      // }
+
+      function nextPage() {
+        if (current < pages.length) {
+          pages[current].classList.add("flipped");
+          // playSound();
+          current++;
+        }
+      }
+
+      function prevPage() {
+        if (current >= 0) {
+          current--;
+          pages[current].classList.remove("flipped");
+          // playSound();
+        }
+      }
+    </script>
+  </body>
+</html>
